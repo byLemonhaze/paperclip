@@ -4,7 +4,8 @@ import { useSidebar } from "../context/SidebarContext";
 import type { LucideIcon } from "lucide-react";
 
 interface SidebarNavItemProps {
-  to: string;
+  to?: string;
+  href?: string;
   label: string;
   icon: LucideIcon;
   end?: boolean;
@@ -17,6 +18,7 @@ interface SidebarNavItemProps {
 
 export function SidebarNavItem({
   to,
+  href,
   label,
   icon: Icon,
   end,
@@ -27,22 +29,8 @@ export function SidebarNavItem({
   liveCount,
 }: SidebarNavItemProps) {
   const { isMobile, setSidebarOpen } = useSidebar();
-
-  return (
-    <NavLink
-      to={to}
-      end={end}
-      onClick={() => { if (isMobile) setSidebarOpen(false); }}
-      className={({ isActive }) =>
-        cn(
-          "flex items-center gap-2.5 px-3 py-2 text-[13px] font-medium transition-colors",
-          isActive
-            ? "bg-accent text-foreground"
-            : "text-foreground/80 hover:bg-accent/50 hover:text-foreground",
-          className,
-        )
-      }
-    >
+  const content = (
+    <>
       <span className="relative shrink-0">
         <Icon className="h-4 w-4" />
         {alert && (
@@ -71,6 +59,40 @@ export function SidebarNavItem({
           {badge}
         </span>
       )}
+    </>
+  );
+  const baseClassName = cn(
+    "flex items-center gap-2.5 px-3 py-2 text-[13px] font-medium transition-colors text-foreground/80 hover:bg-accent/50 hover:text-foreground",
+    className,
+  );
+  const handleClick = () => {
+    if (isMobile) setSidebarOpen(false);
+  };
+
+  if (href) {
+    return (
+      <a href={href} onClick={handleClick} className={baseClassName}>
+        {content}
+      </a>
+    );
+  }
+
+  return (
+    <NavLink
+      to={to ?? "/"}
+      end={end}
+      onClick={handleClick}
+      className={({ isActive }) =>
+        cn(
+          "flex items-center gap-2.5 px-3 py-2 text-[13px] font-medium transition-colors",
+          isActive
+            ? "bg-accent text-foreground"
+            : "text-foreground/80 hover:bg-accent/50 hover:text-foreground",
+          className,
+        )
+      }
+    >
+      {content}
     </NavLink>
   );
 }

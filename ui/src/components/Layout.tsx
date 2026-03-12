@@ -27,6 +27,8 @@ import { cn } from "../lib/utils";
 import { NotFoundPage } from "../pages/NotFound";
 import { Button } from "@/components/ui/button";
 
+const DOCUMENTATION_URL = "https://paperclip.ing/docs";
+
 export function Layout() {
   const { sidebarOpen, setSidebarOpen, toggleSidebar, isMobile } = useSidebar();
   const { openNewIssue, openOnboarding } = useDialog();
@@ -247,7 +249,7 @@ export function Layout() {
           <div className="border-t border-r border-border px-3 py-2 bg-background">
             <div className="flex items-center gap-1">
               <SidebarNavItem
-                to="/docs"
+                href={DOCUMENTATION_URL}
                 label="Documentation"
                 icon={BookOpen}
                 className="flex-1 min-w-0"
@@ -282,7 +284,7 @@ export function Layout() {
           <div className="border-t border-r border-border px-3 py-2">
             <div className="flex items-center gap-1">
               <SidebarNavItem
-                to="/docs"
+                href={DOCUMENTATION_URL}
                 label="Documentation"
                 icon={BookOpen}
                 className="flex-1 min-w-0"
