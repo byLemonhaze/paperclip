@@ -576,7 +576,7 @@ export function NewIssueDialog() {
         showCloseButton={false}
         aria-describedby={undefined}
         className={cn(
-          "p-0 gap-0 flex flex-col max-h-[calc(100dvh-2rem)]",
+          "p-0 gap-0 flex flex-col max-h-[calc(100dvh-2rem)] overflow-hidden",
           expanded
             ? "sm:max-w-2xl h-[calc(100dvh-2rem)]"
             : "sm:max-w-lg"
@@ -894,7 +894,7 @@ export function NewIssueDialog() {
         )}
 
         {/* Description */}
-        <div className={cn("px-4 pb-2 overflow-y-auto min-h-0 border-t border-border/60 pt-3", expanded ? "flex-1" : "")}>
+        <div className="px-4 pb-2 overflow-y-auto min-h-0 flex-1 border-t border-border/60 pt-3">
           <MarkdownEditor
             ref={descriptionEditorRef}
             value={description}

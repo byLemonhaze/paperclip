@@ -214,11 +214,11 @@ export function NewProjectDialog() {
     >
       <DialogContent
         showCloseButton={false}
-        className={cn("p-0 gap-0", expanded ? "sm:max-w-2xl" : "sm:max-w-lg")}
+        className={cn("p-0 gap-0 flex flex-col max-h-[calc(100dvh-2rem)] overflow-hidden", expanded ? "sm:max-w-2xl" : "sm:max-w-lg")}
         onKeyDown={handleKeyDown}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-4 py-2.5 border-b border-border">
+        <div className="flex items-center justify-between px-4 py-2.5 border-b border-border shrink-0">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             {selectedCompany && (
               <span className="bg-muted px-1.5 py-0.5 rounded text-xs font-medium">
@@ -265,104 +265,105 @@ export function NewProjectDialog() {
           />
         </div>
 
-        {/* Description */}
-        <div className="px-4 pb-2">
-          <MarkdownEditor
-            ref={descriptionEditorRef}
-            value={description}
-            onChange={setDescription}
-            placeholder="Add description..."
-            bordered={false}
-            contentClassName={cn("text-sm text-muted-foreground", expanded ? "min-h-[220px]" : "min-h-[120px]")}
-            imageUploadHandler={async (file) => {
-              const asset = await uploadDescriptionImage.mutateAsync(file);
-              return asset.contentPath;
-            }}
-          />
-        </div>
-
-        <div className="px-4 pb-3 space-y-3 border-t border-border">
-          <div className="pt-3">
-            <p className="text-sm font-medium">Where will work be done on this project?</p>
-            <p className="text-xs text-muted-foreground">Add local folder and/or GitHub repo workspace hints.</p>
-          </div>
-          <div className="grid gap-2 sm:grid-cols-3">
-            <button
-              type="button"
-              className={cn(
-                "rounded-lg border px-3 py-3 text-left transition-colors",
-                workspaceSetup === "local" ? "border-foreground bg-accent/40" : "border-border hover:bg-accent/30",
-              )}
-              onClick={() => toggleWorkspaceSetup("local")}
-            >
-              <div className="flex items-center gap-2 text-sm font-medium">
-                <FolderOpen className="h-4 w-4" />
-                A local folder
-              </div>
-              <p className="mt-1 text-xs text-muted-foreground">Use a full path on this machine.</p>
-            </button>
-            <button
-              type="button"
-              className={cn(
-                "rounded-lg border px-3 py-3 text-left transition-colors",
-                workspaceSetup === "repo" ? "border-foreground bg-accent/40" : "border-border hover:bg-accent/30",
-              )}
-              onClick={() => toggleWorkspaceSetup("repo")}
-            >
-              <div className="flex items-center gap-2 text-sm font-medium">
-                <Github className="h-4 w-4" />
-                A github repo
-              </div>
-              <p className="mt-1 text-xs text-muted-foreground">Paste a GitHub URL.</p>
-            </button>
-            <button
-              type="button"
-              className={cn(
-                "rounded-lg border px-3 py-3 text-left transition-colors",
-                workspaceSetup === "both" ? "border-foreground bg-accent/40" : "border-border hover:bg-accent/30",
-              )}
-              onClick={() => toggleWorkspaceSetup("both")}
-            >
-              <div className="flex items-center gap-2 text-sm font-medium">
-                <GitBranch className="h-4 w-4" />
-                Both
-              </div>
-              <p className="mt-1 text-xs text-muted-foreground">Configure local + repo hints.</p>
-            </button>
+        <div className="flex-1 min-h-0 overflow-y-auto">
+          {/* Description */}
+          <div className="px-4 pb-2">
+            <MarkdownEditor
+              ref={descriptionEditorRef}
+              value={description}
+              onChange={setDescription}
+              placeholder="Add description..."
+              bordered={false}
+              contentClassName={cn("text-sm text-muted-foreground", expanded ? "min-h-[220px]" : "min-h-[120px]")}
+              imageUploadHandler={async (file) => {
+                const asset = await uploadDescriptionImage.mutateAsync(file);
+                return asset.contentPath;
+              }}
+            />
           </div>
 
-          {(workspaceSetup === "local" || workspaceSetup === "both") && (
-            <div className="rounded-md border border-border p-2">
-              <label className="mb-1 block text-xs text-muted-foreground">Local folder (full path)</label>
-              <div className="flex items-center gap-2">
+          <div className="px-4 pb-3 space-y-3 border-t border-border">
+            <div className="pt-3">
+              <p className="text-sm font-medium">Where will work be done on this project?</p>
+              <p className="text-xs text-muted-foreground">Add local folder and/or GitHub repo workspace hints.</p>
+            </div>
+            <div className="grid gap-2 sm:grid-cols-3">
+              <button
+                type="button"
+                className={cn(
+                  "rounded-lg border px-3 py-3 text-left transition-colors",
+                  workspaceSetup === "local" ? "border-foreground bg-accent/40" : "border-border hover:bg-accent/30",
+                )}
+                onClick={() => toggleWorkspaceSetup("local")}
+              >
+                <div className="flex items-center gap-2 text-sm font-medium">
+                  <FolderOpen className="h-4 w-4" />
+                  A local folder
+                </div>
+                <p className="mt-1 text-xs text-muted-foreground">Use a full path on this machine.</p>
+              </button>
+              <button
+                type="button"
+                className={cn(
+                  "rounded-lg border px-3 py-3 text-left transition-colors",
+                  workspaceSetup === "repo" ? "border-foreground bg-accent/40" : "border-border hover:bg-accent/30",
+                )}
+                onClick={() => toggleWorkspaceSetup("repo")}
+              >
+                <div className="flex items-center gap-2 text-sm font-medium">
+                  <Github className="h-4 w-4" />
+                  A github repo
+                </div>
+                <p className="mt-1 text-xs text-muted-foreground">Paste a GitHub URL.</p>
+              </button>
+              <button
+                type="button"
+                className={cn(
+                  "rounded-lg border px-3 py-3 text-left transition-colors",
+                  workspaceSetup === "both" ? "border-foreground bg-accent/40" : "border-border hover:bg-accent/30",
+                )}
+                onClick={() => toggleWorkspaceSetup("both")}
+              >
+                <div className="flex items-center gap-2 text-sm font-medium">
+                  <GitBranch className="h-4 w-4" />
+                  Both
+                </div>
+                <p className="mt-1 text-xs text-muted-foreground">Configure local + repo hints.</p>
+              </button>
+            </div>
+
+            {(workspaceSetup === "local" || workspaceSetup === "both") && (
+              <div className="rounded-md border border-border p-2">
+                <label className="mb-1 block text-xs text-muted-foreground">Local folder (full path)</label>
+                <div className="flex items-center gap-2">
+                  <input
+                    className="w-full rounded border border-border bg-transparent px-2 py-1 text-xs font-mono outline-none"
+                    value={workspaceLocalPath}
+                    onChange={(e) => setWorkspaceLocalPath(e.target.value)}
+                    placeholder="/absolute/path/to/workspace"
+                  />
+                  <ChoosePathButton />
+                </div>
+              </div>
+            )}
+            {(workspaceSetup === "repo" || workspaceSetup === "both") && (
+              <div className="rounded-md border border-border p-2">
+                <label className="mb-1 block text-xs text-muted-foreground">GitHub repo URL</label>
                 <input
-                  className="w-full rounded border border-border bg-transparent px-2 py-1 text-xs font-mono outline-none"
-                  value={workspaceLocalPath}
-                  onChange={(e) => setWorkspaceLocalPath(e.target.value)}
-                  placeholder="/absolute/path/to/workspace"
+                  className="w-full rounded border border-border bg-transparent px-2 py-1 text-xs outline-none"
+                  value={workspaceRepoUrl}
+                  onChange={(e) => setWorkspaceRepoUrl(e.target.value)}
+                  placeholder="https://github.com/org/repo"
                 />
-                <ChoosePathButton />
               </div>
-            </div>
-          )}
-          {(workspaceSetup === "repo" || workspaceSetup === "both") && (
-            <div className="rounded-md border border-border p-2">
-              <label className="mb-1 block text-xs text-muted-foreground">GitHub repo URL</label>
-              <input
-                className="w-full rounded border border-border bg-transparent px-2 py-1 text-xs outline-none"
-                value={workspaceRepoUrl}
-                onChange={(e) => setWorkspaceRepoUrl(e.target.value)}
-                placeholder="https://github.com/org/repo"
-              />
-            </div>
-          )}
-          {workspaceError && (
-            <p className="text-xs text-destructive">{workspaceError}</p>
-          )}
-        </div>
+            )}
+            {workspaceError && (
+              <p className="text-xs text-destructive">{workspaceError}</p>
+            )}
+          </div>
 
-        {/* Property chips */}
-        <div className="flex items-center gap-1.5 px-4 py-2 border-t border-border flex-wrap">
+          {/* Property chips */}
+          <div className="flex items-center gap-1.5 px-4 py-2 border-t border-border flex-wrap">
           {/* Status */}
           <Popover open={statusOpen} onOpenChange={setStatusOpen}>
             <PopoverTrigger asChild>
@@ -454,10 +455,11 @@ export function NewProjectDialog() {
               placeholder="Target date"
             />
           </div>
+          </div>
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between px-4 py-2.5 border-t border-border">
+        <div className="flex items-center justify-between px-4 py-2.5 border-t border-border shrink-0">
           {createProject.isError ? (
             <p className="text-xs text-destructive">Failed to create project.</p>
           ) : (
