@@ -32,8 +32,8 @@ export interface HeartbeatRun {
   errorCode: string | null;
   externalRunId: string | null;
   contextSnapshot: Record<string, unknown> | null;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string | Date;
+  updatedAt: string | Date;
 }
 
 export interface HeartbeatRunEvent {
@@ -48,7 +48,7 @@ export interface HeartbeatRunEvent {
   color: string | null;
   message: string | null;
   payload: Record<string, unknown> | null;
-  createdAt: Date;
+  createdAt: string | Date;
 }
 
 export interface AgentRuntimeState {
